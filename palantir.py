@@ -53,10 +53,10 @@ def write_json(path, data):
 def update_json(path, callback=None, **kwargs):
     with open(cleaned_path(path), "r+") as jsonFile:
         jsondata = json.load(jsonFile)
-        jsonFile.seek(0)
-        jsonFile.truncate()
         newdata = callback(byteify(jsondata), **kwargs)
         if newdata != None and newdata != jsondata:
+            jsonFile.seek(0)
+            jsonFile.truncate()
             json.dump(newdata, jsonFile, sort_keys=True, indent=4, ensure_ascii=False)
             return newdata
         else:
